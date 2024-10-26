@@ -12,17 +12,13 @@ public record NaverBookResponse(
 ) {
 
 
-    record Item(
+    public record Item(
         String title,
-        String link,
-        String image,
         String author,
-        String discount,
         String publisher,
         @JsonProperty("pubdate")
         String pubDate,
-        String isbn,
-        String description
+        String isbn
     ) {
 
     }
