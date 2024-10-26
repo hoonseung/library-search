@@ -2,7 +2,6 @@ package com.library.feign;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import feign.RequestInterceptor;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,6 +9,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class NaverClientConfiguration {
 
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
     @Bean
     public RequestInterceptor requestInterceptor(
@@ -22,7 +22,7 @@ public class NaverClientConfiguration {
     }
 
     @Bean
-    public NaverErrorDecoder naverErrorDecoder(ObjectMapper objectMapper){
+    public NaverErrorDecoder naverErrorDecoder() {
         return new NaverErrorDecoder(objectMapper);
     }
 }

@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 public interface NaverClient {
 
     @GetMapping("/v1/search/book.json")
-    String search(@RequestParam(name = "query") String query,
+    NaverBookResponse search(@RequestParam(name = "query") String query,
         @RequestParam(name = "start") int start,
         @RequestParam(name = "display") int display);
 }
