@@ -1,30 +1,39 @@
 package com.library.feign;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.library.ApiException;
+import com.library.ErrorType;
 import com.library.NaverErrorResponse;
 import feign.Response;
 import feign.codec.ErrorDecoder;
 import java.io.IOException;
-import org.springframework.web.ErrorResponse;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 
-
+@Slf4j
 public class NaverErrorDecoder implements ErrorDecoder {
 
-    private ObjectMapper objectMapper;
+    private final ObjectMapper objectMapper;
 
     public NaverErrorDecoder(ObjectMapper objectMapper) {
         this.objectMapper = objectMapper;
     }
 
     @Override
-    public Exception decode(String s, Response response) {
+    public Exception decode(String methodKey, Response response) {
         try {
             NaverErrorResponse errorResponse = objectMapper.readValue(
                 response.body().asInputStream(),
                 NaverErrorResponse.class);
-            throw new RuntimeException(errorResponse.errorMessage());
+            throw new ApiException(
+                errorResponse.errorMessage(),
+                ErrorType.EXTERNAL_API_ERROR,
+                HttpStatus.valueOf(response.status()));
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            log.error("{} 에러 메세지 파싱 에러 code={}, request={}, methodKey={}, errorMessage={}",
+                "NAVER", response.status(), response.request(), methodKey, e.getMessage());
+            throw new ApiException("네이버 메세지 파싱에러", ErrorType.EXTERNAL_API_ERROR,
+                HttpStatus.valueOf(response.status()));
         }
     }
 }
