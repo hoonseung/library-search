@@ -22,6 +22,18 @@ spring:
         show_sql: true
         format_sql: true
 
+resilience4j:
+  circuitbreaker:
+    configs:
+      default:
+        sliding-window-size: 100 # 100개의 요청을 기반으로 실패율을 계산
+        minimum-number-of-calls: 10 # 10개 이상의 요청이 있어야 circuit breaker가 동작
+        wait-duration-in-open-state: # open 상태에서 half-open 상태로 전환되는 시간
+          seconds: 20
+        failure-rate-threshold: 50 # 50% 이상의 실패율이면 circuit breaker가 open 상태로 전환
+        permitted-number-of-calls-in-half-open-state: 10 # half-open 상태에서 10개의 요청을 보내고 성공율을 계산
+
+
 logging:
   level:
     org.hibernate.orm.jdbc.bind: trace
