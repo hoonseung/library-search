@@ -6,8 +6,10 @@ import com.library.controller.response.StatResponse;
 import com.library.entity.DailyStat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Slf4j
@@ -27,8 +29,12 @@ public class BookApplicationService {
         return response;
     }
 
-    public StatResponse findCountByQuery(String query, LocalDate date){
+    public StatResponse findCountByQuery(String query, LocalDate date) {
         return dailyStatQueryService.findQueryCount(query, date);
+    }
+
+    public List<StatResponse> findTop5DailyStat() {
+        return dailyStatQueryService.findTop5DailyStat();
     }
 
 

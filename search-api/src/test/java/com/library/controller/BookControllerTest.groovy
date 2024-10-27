@@ -1,5 +1,6 @@
 package com.library.controller
 
+
 import com.library.service.BookApplicationService
 import org.springframework.http.HttpStatus
 import org.springframework.test.web.servlet.MockMvc
@@ -54,7 +55,7 @@ class BookControllerTest extends Specification {
 
         when:
         def response = mockMvc.perform(
-                get("/v1/books/states?query=${givenQuery}&date=${givenDate}"))
+                get("/v1/books/stats?query=${givenQuery}&date=${givenDate}"))
                 .andReturn().response
 
         then:
@@ -67,5 +68,19 @@ class BookControllerTest extends Specification {
                 assert query == givenQuery
                 assert date == givenDate
         }
+    }
+
+    def "컨트롤러가 정상적으로 실행되고 findTopDailyStat 실행되는지"() {
+
+        when:
+        def response = mockMvc.perform(
+                get("/v1/books/stats/ranking"))
+                .andReturn().response
+
+
+        then:
+        response.status == HttpStatus.OK.value()
+        1 * bookApplicationService.findTop5DailyStat()
+
     }
 }
