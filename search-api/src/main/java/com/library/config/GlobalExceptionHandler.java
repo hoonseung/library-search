@@ -5,6 +5,7 @@ import static com.library.ErrorType.NO_RESOURCE;
 import static com.library.ErrorType.UNKNOWN;
 
 import com.library.ApiException;
+import com.library.controller.response.ApiErrorResponse;
 import java.util.Objects;
 import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
@@ -41,7 +42,7 @@ public class GlobalExceptionHandler {
         log.error("NoResourceFoundException occurs message={}, className={},"
             , e.getMessage(), e.getClass().getSimpleName());
         return ResponseEntity
-            .status(HttpStatus.NOT_FOUND)
+            .status(HttpStatus.BAD_REQUEST)
             .body(new ApiErrorResponse(NO_RESOURCE.getDescription(), NO_RESOURCE));
     }
 
