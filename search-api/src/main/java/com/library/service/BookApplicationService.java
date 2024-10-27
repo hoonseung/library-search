@@ -2,7 +2,9 @@ package com.library.service;
 
 import com.library.controller.response.PageResult;
 import com.library.controller.response.SearchResponse;
+import com.library.controller.response.StatResponse;
 import com.library.entity.DailyStat;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -15,6 +17,7 @@ public class BookApplicationService {
 
     private final BookQueryService bookQueryService;
     private final DailyStatCommandService dailyStatCommandService;
+    private final DailyStatQueryService dailyStatQueryService;
 
 
     public PageResult<SearchResponse> search(String query, int page, int size) {
@@ -23,4 +26,10 @@ public class BookApplicationService {
         dailyStatCommandService.save(DailyStat.createEntity(query, LocalDateTime.now()));
         return response;
     }
+
+    public StatResponse findCountByQuery(String query, LocalDate date){
+        return dailyStatQueryService.findQueryCount(query, date);
+    }
+
+
 }

@@ -39,4 +39,25 @@ class DailyStatRepositoryTest extends Specification {
         }
 
     }
+
+    @Rollback(false)
+    def "일별 query 키운트를 조회한다."(){
+        given:
+        def givenQuery = "HTTP"
+        def givenNow = LocalDateTime.of(2024, 9, 1, 0, 0 ,0)
+        def stat1 = DailyStat.createEntity(givenQuery, givenNow.plusMinutes(10))
+
+        def stat2 = DailyStat.createEntity(givenQuery, givenNow.minusMinutes(10))
+        def stat3 = DailyStat.createEntity(givenQuery, givenNow.plusMinutes(10))
+
+        def stat4 = DailyStat.createEntity("java", givenNow.plusMinutes(10))
+        dailyStatRepository.saveAll([stat1, stat2, stat3, stat4])
+        when:
+        def result = dailyStatRepository.countByQueryAndEventDateTimeBetween(givenQuery, givenNow, givenNow.plusDays(1))
+
+        then:
+        verifyAll(result){
+            assert result == 2
+        }
+    }
 }

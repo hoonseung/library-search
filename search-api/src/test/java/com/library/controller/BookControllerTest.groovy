@@ -1,14 +1,14 @@
 package com.library.controller
 
 import com.library.service.BookApplicationService
-import com.library.service.BookQueryService
 import org.springframework.http.HttpStatus
 import org.springframework.test.web.servlet.MockMvc
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
 import org.springframework.test.web.servlet.setup.MockMvcBuilders
 import spock.lang.Specification
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*
+import java.time.LocalDate
+
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 
 class BookControllerTest extends Specification {
 
@@ -44,6 +44,28 @@ class BookControllerTest extends Specification {
                 assert query == givenQuery
                 assert page == givenPage
                 assert size == givenSize
+        }
+    }
+
+    def "컨트롤러가 정상적으로 실행되고 인자가 제대로 넘어와서 findCountByQuery 실행되는지"() {
+        given:
+        def givenQuery = "HTTP"
+        def givenDate = LocalDate.of(2024, 5, 1)
+
+        when:
+        def response = mockMvc.perform(
+                get("/v1/books/states?query=${givenQuery}&date=${givenDate}"))
+                .andReturn().response
+
+        then:
+        response.status == HttpStatus.OK.value()
+
+
+        and:
+        1 * bookApplicationService.findCountByQuery(*_) >> {
+            String query, LocalDate date ->
+                assert query == givenQuery
+                assert date == givenDate
         }
     }
 }
