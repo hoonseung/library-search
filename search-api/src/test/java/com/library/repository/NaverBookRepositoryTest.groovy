@@ -1,12 +1,12 @@
 package com.library.repository
 
-import com.library.feign.NaverBookResponse
+import com.library.NaverBookResponse
 import com.library.feign.NaverClient
 import spock.lang.Specification
 
 import java.time.LocalDate
 
-import static com.library.feign.NaverBookResponse.Item
+import static com.library.NaverBookResponse.Item
 
 class NaverBookRepositoryTest extends Specification {
 

@@ -2,7 +2,7 @@ package com.library.repository;
 
 import com.library.controller.response.PageResult;
 import com.library.controller.response.SearchResponse;
-import com.library.feign.NaverBookResponse;
+import com.library.NaverBookResponse;
 import com.library.feign.NaverClient;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;

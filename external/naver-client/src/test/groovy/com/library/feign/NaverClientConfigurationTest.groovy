@@ -12,7 +12,7 @@ class NaverClientConfigurationTest extends Specification {
         configuration = new NaverClientConfiguration()
     }
 
-    def "requestInterceptor의 헤더에 naver key와 secret값이 잘 적용되는지"() {
+    def 'naverRequestInterceptor의 헤더에 naver key와 secret값이 잘 적용되는지'() {
         given:
         def template = new RequestTemplate()
         def clientId = "id"
@@ -23,7 +23,7 @@ class NaverClientConfigurationTest extends Specification {
         template.headers()["X-Naver-Client-Secret"] == null
 
         when:
-        def interceptor = configuration.requestInterceptor(clientId, clientSecret)
+        def interceptor = configuration.naverRequestInterceptor(clientId, clientSecret)
         interceptor.apply(template)
 
 

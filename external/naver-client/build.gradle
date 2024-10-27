@@ -1,7 +1,0 @@
-jar.enabled = true
-
-dependencies {
-    implementation project(':common')
-    //`api` 키워드는 이 의존성이 다른 프로젝트에서도 사용될 수 있도록 노출된다는 것을 의미
-    api 'org.springframework.cloud:spring-cloud-starter-openfeign'
-}

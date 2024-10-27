@@ -1,10 +1,12 @@
 package com.library.controller.response;
 
-import com.library.feign.NaverBookResponse.Item;
+import com.library.KakaoBookResponse.Document;
+import com.library.NaverBookResponse.Item;
 import com.library.util.DateUtils;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.time.LocalDate;
 import lombok.Builder;
+
 @Schema(description = "도서검색결과 응답 모델")
 @Builder
 public record SearchResponse(
@@ -27,6 +29,16 @@ public record SearchResponse(
             .publisher(item.publisher())
             .pubDate(DateUtils.parseYYYMMDD(item.pubDate()))
             .isbn(item.isbn())
+            .build();
+    }
+
+    public static SearchResponse create(Document document) {
+        return SearchResponse.builder()
+            .title(document.title())
+            .author(document.authors().isEmpty()? "저자 없음" : document.authors().getFirst())
+            .publisher(document.publisher())
+            .pubDate(document.dateTime().toLocalDate())
+            .isbn(document.isbn())
             .build();
     }
 

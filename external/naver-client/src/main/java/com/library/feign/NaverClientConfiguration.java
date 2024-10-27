@@ -12,7 +12,7 @@ public class NaverClientConfiguration {
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     @Bean
-    public RequestInterceptor requestInterceptor(
+    public RequestInterceptor naverRequestInterceptor(
         @Value("${external.naver.headers.client-id}") String clientId,
         @Value("${external.naver.headers.client-secret}") String clientSecret) {
 
