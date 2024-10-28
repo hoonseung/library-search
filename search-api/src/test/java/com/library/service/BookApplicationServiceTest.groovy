@@ -1,7 +1,9 @@
 package com.library.service
 
-
-import com.library.entity.DailyStat
+import com.library.controller.response.PageResult
+import com.library.controller.response.SearchResponse
+import com.library.service.event.SearchEvent
+import org.springframework.context.ApplicationEventPublisher
 import spock.lang.Specification
 
 import java.time.LocalDate
@@ -9,12 +11,12 @@ import java.time.LocalDate
 class BookApplicationServiceTest extends Specification {
 
     BookQueryService bookQueryService = Mock()
-    DailyStatCommandService dailyStatCommandService = Mock()
     DailyStatQueryService dailyStatQueryService = Mock()
+    ApplicationEventPublisher applicationEventPublisher = Mock()
     BookApplicationService bookApplicationService
 
     void setup() {
-        bookApplicationService = new BookApplicationService(bookQueryService, dailyStatCommandService, dailyStatQueryService)
+        bookApplicationService = new BookApplicationService(bookQueryService, dailyStatQueryService, applicationEventPublisher)
     }
 
     def "searh 메서드 호출 시 외부 api 호출과 통계 데이터를 DB에 저장한다."() {
@@ -33,13 +35,13 @@ class BookApplicationServiceTest extends Specification {
                     assert query == givenQuery
                     assert page == givenPage
                     assert size == givenSize
+                    return new PageResult<>(page, size, 100, [Mock(SearchResponse)])
                 }
         }
 
-        and:
-        1 * dailyStatCommandService.save(*_) >> {
-            DailyStat dailyStat -> assert dailyStat.query == givenQuery
-        }
+        and: "저장 이벤트를 발행한다."
+        1 * applicationEventPublisher.publishEvent(_ as SearchEvent)
+
     }
 
     def "findCountByQuery 호출 시 인자를 그대로 넘긴다."() {
