@@ -1,10 +1,10 @@
 package com.library.config;
 
-import static com.library.ErrorType.INVALID_PARAMETER;
-import static com.library.ErrorType.NO_RESOURCE;
-import static com.library.ErrorType.UNKNOWN;
+import static com.library.exception.ErrorType.INVALID_PARAMETER;
+import static com.library.exception.ErrorType.NO_RESOURCE;
+import static com.library.exception.ErrorType.UNKNOWN;
 
-import com.library.ApiException;
+import com.library.exception.ApiException;
 import com.library.controller.response.ApiErrorResponse;
 import java.util.Objects;
 import java.util.stream.Collectors;
