@@ -11,7 +11,7 @@ class DateUtilsTest extends Specification {
         def date = "20240101"
 
         when:
-        def result = DateUtils.parseYYYMMDD(date)
+        def result = DateUtils.parseYYYYMMDD(date)
 
         then:
         result == LocalDate.of(2024, 01, 01)

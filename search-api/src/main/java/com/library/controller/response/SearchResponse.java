@@ -27,7 +27,7 @@ public record SearchResponse(
             .title(item.title())
             .author(item.author())
             .publisher(item.publisher())
-            .pubDate(DateUtils.parseYYYMMDD(item.pubDate()))
+            .pubDate(DateUtils.parseYYYYMMDD(item.pubDate()))
             .isbn(item.isbn())
             .build();
     }
@@ -35,10 +35,20 @@ public record SearchResponse(
     public static SearchResponse create(Document document) {
         return SearchResponse.builder()
             .title(document.title())
-            .author(document.authors().isEmpty()? "저자 없음" : document.authors().getFirst())
+            .author(document.authors().isEmpty() ? "저자 없음" : document.authors().getFirst())
             .publisher(document.publisher())
             .pubDate(document.dateTime().toLocalDate())
             .isbn(document.isbn())
+            .build();
+    }
+
+    public static SearchResponse create(String title, String author, String publisher, String pubDate, String isbn) {
+        return SearchResponse.builder()
+            .title(title)
+            .author(author.isEmpty() ? "저자 없음" : author)
+            .publisher(publisher)
+            .pubDate(DateUtils.parseYYYYdashMMdashDD(pubDate))
+            .isbn(isbn)
             .build();
     }
 

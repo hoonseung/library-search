@@ -21,5 +21,12 @@ EPIC: LS-0
 - LS-8: 문서화
 - LS-9: 고가용성을 위한 설계
 - LS-10: 애플리케이션 이벤트 기반 처리 @Async 사용
-- LS-11: ElasticSearch 연결
-- 
+- LS-11: ElasticSearch 연결, ElasticSearch 통해 조회하는 V2 Controller 구현
+- LS-12: 스프링 배치를 통한 도서 데이터 셋 구축 (엘라스틱 인덱스에 저장)
+
+
+
+
+
+
+

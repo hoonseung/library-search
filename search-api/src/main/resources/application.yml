@@ -35,6 +35,9 @@ resilience4j:
         failure-rate-threshold: 50 # 50% 이상의 실패율이면 circuit breaker가 open 상태로 전환
         permitted-number-of-calls-in-half-open-state: 10 # half-open 상태에서 10개의 요청을 보내고 성공율을 계산
 
+elasticsearch:
+  base:
+    url: http://${ELASTICSEARCH_URL:localhost}:${ELASTICSEARCH_PORT:9200}
 
 logging:
   level:

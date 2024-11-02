@@ -28,7 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/v1/books")
-@Tag(name = "book", description = "book API")
+@Tag(name = "book V1", description = "book API V1")
 public class BookController {
 
     private final BookApplicationService bookApplicationService;
